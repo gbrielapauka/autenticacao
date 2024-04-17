@@ -9,8 +9,6 @@ import br.com.autenticacao.model.Usuario;
 import br.com.autenticacao.DAO.GenericDAO;
 import br.com.autenticacao.DAO.UsuarioDAOImpl;
 
-
-
 public class UsuarioController {
 	
 public List<Usuario> listarTodos() {
