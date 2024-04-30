@@ -167,5 +167,38 @@ public class UsuarioDAOImpl implements GenericDAO {
 		}
 
 	}
+	
+	public boolean autenticar(String email, String senha) {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT id, nome FROM usuario WHERE"
+				+ "	email = ?\r\n"
+				+ "	AND senha = MD5(?)";
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, email);
+			stmt.setString(2, senha);
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				return true;
+			} else {
+				return false;
+			}
+			
+		} catch (SQLException ex) {
+			System.out.println("Problemas na DAO ao autenticar usuário");
+			ex.printStackTrace();
+			return false;
+		}finally {
+			try {
+				ConnectionFactory.closeConnection(conn, stmt);
+			} catch (Exception e) {
+				System.out.println("Problemas para fechar conexão!");
+				e.printStackTrace();
+			}
+		}
+	}
 
 }
